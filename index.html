@@ -1,0 +1,1293 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>القرص الدوار التفاعلي | مدرسة السلطان فيصل بن تركي للبنين (6-9)</title>
+    <!-- استيراد خط تجوال العربي الاحترافي -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&display=swap" rel="stylesheet">
+    <!-- مكتبة الاحتفالات والكونفيتي المبهجة -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+    <style>
+        :root {
+            --primary-royal: #1d4ed8;
+            --primary-light: #0284c7;
+            --accent-gold: #f59e0b;
+            --accent-glow: rgba(245, 158, 11, 0.5);
+            --emerald-vibrant: #10b981;
+            --danger-bright: #ef4444;
+            --text-dark: #0f172a;
+            --text-muted: #334155;
+            --bg-active-image: none;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Tajawal', sans-serif;
+            user-select: none;
+            -webkit-user-select: none;
+        }
+
+        body {
+            min-height: 100vh;
+            color: var(--text-dark);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 18px;
+            overflow-x: hidden;
+            position: relative;
+            background-color: #f1f5f9;
+            /* خلفية الصفحة مع تراكب لوني شفاف خفيف لإبراز الصورة دون إعتام */
+            background-image: 
+                linear-gradient(135deg, rgba(255, 255, 255, 0.45) 0%, rgba(240, 249, 255, 0.35) 100%),
+                var(--bg-active-image);
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            transition: background-image 0.4s ease-in-out;
+        }
+
+        /* شبكة بريق ضوئي ناعم */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            pointer-events: none;
+            background: radial-gradient(circle at 50% 20%, rgba(255,255,255,0.25) 0%, transparent 70%);
+            z-index: 0;
+        }
+
+        header.header-card {
+            position: relative;
+            z-index: 10;
+            width: 100%;
+            max-width: 1380px;
+            /* تراكب شفاف مشرق يُظهر صورة الخلفية بوضوح */
+            background-color: rgba(255, 255, 255, 0.78);
+            background-image: 
+                linear-gradient(135deg, rgba(255, 255, 255, 0.82) 0%, rgba(240, 249, 255, 0.72) 100%),
+                var(--bg-active-image);
+            background-size: cover;
+            background-position: center;
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 2px solid rgba(255, 255, 255, 0.85);
+            border-radius: 26px;
+            padding: 14px 28px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 0 14px 35px rgba(15, 23, 42, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.95);
+            margin-bottom: 22px;
+            gap: 15px;
+            transition: background-image 0.4s ease;
+        }
+
+        .header-logo-container {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            min-width: 230px;
+        }
+
+        .header-logo-container.end {
+            justify-content: flex-end;
+        }
+
+        .logo-frame {
+            width: 82px;
+            height: 82px;
+            border-radius: 20px;
+            background: linear-gradient(145deg, #ffffff, #f8fafc);
+            border: 2.5px solid #fbbf24;
+            padding: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 8px 20px rgba(245, 158, 11, 0.22);
+            overflow: hidden;
+            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        .logo-frame:hover {
+            transform: scale(1.06) rotate(-2deg);
+            border-color: #2563eb;
+            box-shadow: 0 12px 25px rgba(37, 99, 235, 0.3);
+        }
+
+        .logo-frame img, .logo-frame svg {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            border-radius: 12px;
+        }
+
+        .logo-info h3 {
+            font-size: 1.15rem;
+            font-weight: 900;
+            color: #1e3a8a;
+            line-height: 1.3;
+        }
+
+        .logo-info p {
+            font-size: 0.88rem;
+            color: #475569;
+            font-weight: 700;
+        }
+
+        .center-heading {
+            text-align: center;
+            flex: 1;
+        }
+
+        .center-heading h1 {
+            font-size: 1.75rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, #1e3a8a 0%, #0284c7 50%, #d97706 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 8px;
+            letter-spacing: -0.5px;
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.05));
+        }
+
+        .meta-badges {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .badge-pill {
+            background: rgba(255, 255, 255, 0.95);
+            border: 1.5px solid #cbd5e1;
+            padding: 6px 16px;
+            border-radius: 9999px;
+            font-size: 0.92rem;
+            font-weight: 800;
+            color: #1e293b;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+        }
+
+        .badge-pill.highlight {
+            background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+            border-color: #b45309;
+            color: #ffffff;
+            box-shadow: 0 6px 18px rgba(217, 119, 6, 0.3);
+        }
+
+        .badge-pill.teacher {
+            background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+            border-color: #1e40af;
+            color: #ffffff;
+            box-shadow: 0 6px 18px rgba(37, 99, 235, 0.28);
+        }
+
+        .workspace {
+            position: relative;
+            z-index: 10;
+            display: flex;
+            width: 100%;
+            max-width: 1380px;
+            gap: 25px;
+            align-items: stretch;
+            justify-content: center;
+        }
+
+        .wheel-card {
+            flex: 1.4;
+            /* مستطيل القرص الدوار مدعوم بصورة الخلفية background مع تراكب شفاف مشرق */
+            background-color: rgba(255, 255, 255, 0.78);
+            background-image: 
+                linear-gradient(135deg, rgba(255, 255, 255, 0.84) 0%, rgba(240, 249, 255, 0.74) 100%),
+                var(--bg-active-image);
+            background-size: cover;
+            background-position: center;
+            backdrop-filter: blur(18px);
+            -webkit-backdrop-filter: blur(18px);
+            border: 2px solid rgba(255, 255, 255, 0.85);
+            border-radius: 32px;
+            padding: 24px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            box-shadow: 0 20px 45px rgba(15, 23, 42, 0.1), inset 0 2px 4px rgba(255,255,255,0.9);
+            transition: background-image 0.4s ease;
+        }
+
+        .wheel-container {
+            position: relative;
+            width: 530px;
+            height: 530px;
+            max-width: 86vw;
+            max-height: 86vw;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            filter: drop-shadow(0 18px 30px rgba(0, 0, 0, 0.16));
+        }
+
+        /* مؤشر اختيار فخم ثلاثي الأبعاد */
+        .wheel-pointer {
+            position: absolute;
+            top: -22px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 35;
+            width: 0;
+            height: 0;
+            border-left: 22px solid transparent;
+            border-right: 22px solid transparent;
+            border-top: 45px solid #dc2626;
+            filter: drop-shadow(0 6px 10px rgba(220, 38, 38, 0.45));
+            transition: transform 0.15s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .wheel-pointer::after {
+            content: '';
+            position: absolute;
+            top: -46px;
+            left: -12px;
+            width: 24px;
+            height: 24px;
+            background: #fbbf24;
+            border-radius: 50%;
+            box-shadow: 0 0 15px #f59e0b;
+            border: 3px solid #ffffff;
+        }
+
+        canvas {
+            border-radius: 50%;
+            border: 10px solid #ffffff;
+            background: #ffffff;
+            box-shadow: 0 0 35px rgba(0, 0, 0, 0.12), inset 0 0 25px rgba(0, 0, 0, 0.07);
+            cursor: pointer;
+        }
+
+        /* زر التدوير الأوسط المضيء */
+        .center-spin-hub {
+            position: absolute;
+            width: 105px;
+            height: 105px;
+            background: radial-gradient(circle, #f59e0b 0%, #d97706 70%, #b45309 100%);
+            border-radius: 50%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 10px 28px rgba(217, 119, 6, 0.45), inset 0 3px 8px rgba(255, 255, 255, 0.7);
+            border: 6px solid #ffffff;
+            color: #ffffff;
+            font-weight: 900;
+            font-size: 1.25rem;
+            z-index: 30;
+            transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        .center-spin-hub:hover {
+            transform: scale(1.1);
+            box-shadow: 0 12px 36px rgba(217, 119, 6, 0.65), inset 0 4px 10px rgba(255, 255, 255, 0.9);
+        }
+
+        .center-spin-hub:active {
+            transform: scale(0.94);
+        }
+
+        .center-spin-hub span {
+            font-size: 0.78rem;
+            letter-spacing: 0.5px;
+            opacity: 0.95;
+            font-weight: 800;
+        }
+
+        .side-control-card {
+            flex: 1.05;
+            background-color: rgba(255, 255, 255, 0.86);
+            backdrop-filter: blur(18px);
+            -webkit-backdrop-filter: blur(18px);
+            border: 2px solid rgba(255, 255, 255, 0.85);
+            border-radius: 32px;
+            padding: 24px;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            box-shadow: 0 20px 45px rgba(15, 23, 42, 0.1), inset 0 2px 4px rgba(255,255,255,0.9);
+            max-height: 630px;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+        }
+
+        .stat-box {
+            background: #ffffff;
+            border: 2px solid #e2e8f0;
+            border-radius: 18px;
+            padding: 12px 8px;
+            text-align: center;
+            box-shadow: 0 4px 14px rgba(0, 0, 0, 0.03);
+            transition: transform 0.2s;
+        }
+
+        .stat-box:hover {
+            transform: translateY(-2px);
+        }
+
+        .stat-box .count {
+            font-size: 1.8rem;
+            font-weight: 900;
+            line-height: 1.1;
+        }
+
+        .stat-box .label {
+            font-size: 0.82rem;
+            color: #64748b;
+            font-weight: 700;
+            margin-top: 4px;
+        }
+
+        .btn-modern {
+            border: none;
+            outline: none;
+            border-radius: 16px;
+            font-weight: 800;
+            font-size: 1.05rem;
+            padding: 13px 18px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            transition: all 0.25s ease;
+        }
+
+        .btn-spin-main {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            color: #ffffff;
+            box-shadow: 0 8px 24px rgba(16, 185, 129, 0.35);
+        }
+
+        .btn-spin-main:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 30px rgba(16, 185, 129, 0.5);
+            filter: brightness(1.05);
+        }
+
+        .btn-spin-main:disabled {
+            background: #94a3b8;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .action-btns-row {
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn-secondary {
+            background: #ffffff;
+            border: 2px solid #e2e8f0;
+            color: #1e293b;
+            flex: 1;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+        }
+
+        .btn-secondary:hover {
+            background: #f8fafc;
+            border-color: #cbd5e1;
+        }
+
+        .btn-danger {
+            background: #fef2f2;
+            border: 2px solid #fecaca;
+            color: #dc2626;
+            flex: 1;
+        }
+
+        .btn-danger:hover {
+            background: #fee2e2;
+            border-color: #fca5a5;
+        }
+
+        .list-tabs {
+            display: flex;
+            gap: 8px;
+            border-bottom: 2px solid #e2e8f0;
+            padding-bottom: 6px;
+        }
+
+        .tab-btn {
+            background: transparent;
+            border: none;
+            color: #64748b;
+            font-size: 0.95rem;
+            font-weight: 800;
+            padding: 8px 14px;
+            cursor: pointer;
+            border-radius: 12px;
+            transition: 0.2s;
+        }
+
+        .tab-btn.active {
+            color: #2563eb;
+            background: #eff6ff;
+            box-shadow: 0 2px 8px rgba(37, 99, 235, 0.1);
+        }
+
+        .students-scroll {
+            flex: 1;
+            overflow-y: auto;
+            border-radius: 18px;
+            background: #ffffff;
+            border: 2px solid #e2e8f0;
+            padding: 10px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            box-shadow: inset 0 2px 6px rgba(0,0,0,0.03);
+        }
+
+        .students-scroll::-webkit-scrollbar {
+            width: 7px;
+        }
+
+        .students-scroll::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 10px;
+        }
+
+        .student-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px 14px;
+            background: #f8fafc;
+            border: 1.5px solid #e2e8f0;
+            border-radius: 12px;
+            font-size: 0.92rem;
+            font-weight: 700;
+            color: #1e293b;
+            transition: all 0.2s;
+        }
+
+        .student-row:hover {
+            background: #f1f5f9;
+            border-color: #cbd5e1;
+            transform: translateX(-3px);
+        }
+
+        .student-row.excluded {
+            background: #fef2f2;
+            border-color: #fee2e2;
+            color: #991b1b;
+        }
+
+        .student-row .num-idx {
+            width: 28px;
+            height: 28px;
+            border-radius: 8px;
+            background: #e2e8f0;
+            color: #0f172a;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 900;
+            font-size: 0.82rem;
+            margin-left: 10px;
+        }
+
+        .restore-mini-btn {
+            background: #eff6ff;
+            border: 1.5px solid #bfdbfe;
+            color: #2563eb;
+            border-radius: 8px;
+            padding: 4px 10px;
+            font-size: 0.8rem;
+            font-weight: 800;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .restore-mini-btn:hover {
+            background: #2563eb;
+            color: #ffffff;
+        }
+
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(15, 23, 42, 0.6);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            padding: 20px;
+        }
+
+        .winner-card {
+            background: #ffffff;
+            border: 4px solid #f59e0b;
+            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.22), 0 0 45px rgba(245, 158, 11, 0.35);
+            border-radius: 36px;
+            padding: 38px 28px;
+            width: 100%;
+            max-width: 560px;
+            text-align: center;
+            position: relative;
+            transform: scale(0.85);
+            animation: zoomAward 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+        }
+
+        @keyframes zoomAward {
+            to { transform: scale(1); }
+        }
+
+        .winner-cup {
+            font-size: 5rem;
+            line-height: 1;
+            margin-bottom: 10px;
+            filter: drop-shadow(0 8px 18px rgba(245, 158, 11, 0.4));
+            animation: floatCup 1.8s ease-in-out infinite alternate;
+        }
+
+        @keyframes floatCup {
+            from { transform: translateY(0); }
+            to { transform: translateY(-12px); }
+        }
+
+        .winner-header-sub {
+            font-size: 1.25rem;
+            color: #1e3a8a;
+            font-weight: 800;
+            margin-bottom: 8px;
+        }
+
+        .winner-name-display {
+            font-size: 2.05rem;
+            font-weight: 900;
+            color: #1e3a8a;
+            background: linear-gradient(135deg, #f0fdf4 0%, #e0f2fe 100%);
+            border: 2.5px dashed #0284c7;
+            padding: 20px 24px;
+            border-radius: 24px;
+            margin: 18px 0;
+            line-height: 1.4;
+            box-shadow: 0 8px 20px rgba(2, 132, 199, 0.12);
+        }
+
+        .winner-note-text {
+            color: #64748b;
+            font-size: 0.98rem;
+            font-weight: 700;
+            margin-bottom: 25px;
+        }
+
+        .winner-modal-actions {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .winner-btn {
+            color: white;
+            font-size: 1.05rem;
+            font-weight: 800;
+            border: none;
+            padding: 13px 24px;
+            border-radius: 16px;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .winner-btn.btn-confirm-exclude {
+            background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%);
+            box-shadow: 0 6px 18px rgba(220, 38, 38, 0.3);
+        }
+
+        .winner-btn.btn-keep {
+            background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%);
+            box-shadow: 0 6px 18px rgba(2, 132, 199, 0.3);
+        }
+
+        .winner-btn:hover {
+            transform: translateY(-2px);
+            filter: brightness(1.08);
+        }
+
+        .toast-box {
+            position: fixed;
+            bottom: 24px;
+            background: #ffffff;
+            border: 2px solid #f59e0b;
+            padding: 14px 28px;
+            border-radius: 16px;
+            font-size: 1rem;
+            font-weight: 800;
+            color: #b45309;
+            display: none;
+            z-index: 2000;
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.12);
+        }
+
+        @media (max-width: 980px) {
+            .workspace {
+                flex-direction: column;
+                align-items: center;
+            }
+            .side-control-card {
+                width: 100%;
+                max-width: 530px;
+            }
+            header.header-card {
+                flex-direction: column;
+                text-align: center;
+                gap: 14px;
+            }
+            .header-logo-container, .header-logo-container.end {
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header class="header-card" id="headerCard">
+        <div class="header-logo-container">
+            <div class="logo-frame" title="شعار مدرسة السلطان فيصل بن تركي للبنين">
+                <!-- تحميل شعار المدرسة school مع بدائل SVG أنيقة -->
+                <img id="schoolLogoImg" src="school.png" alt="شعار المدرسة" 
+                     onerror="handleImageFallback(this, ['school.jpg', 'school.jpeg', 'school.webp', 'school.svg', 'school'], 'schoolFallbackSvg')">
+                <svg id="schoolFallbackSvg" style="display:none;" viewBox="0 0 100 100">
+                    <rect width="100" height="100" rx="16" fill="#1e3a8a"/>
+                    <path d="M50 18 L18 34 L50 50 L82 34 Z" fill="#fbbf24"/>
+                    <path d="M26 44 V65 C26 76 50 84 50 84 C50 84 74 76 74 65 V44" fill="none" stroke="#ffffff" stroke-width="5" stroke-linecap="round"/>
+                </svg>
+            </div>
+            <div class="logo-info">
+                <h3>سلطنة عُمان</h3>
+                <p>وزارة التعليم</p>
+            </div>
+        </div>
+
+        <div class="center-heading">
+            <h1>مدرسة السلطان فيصل بن تركي للبنين (6 - 9)</h1>
+            <div class="meta-badges">
+                <div class="badge-pill highlight">🏫 الصف: 6 / 2</div>
+                <div class="badge-pill teacher">👨‍🏫 معلم المادة: أ / محمد خليل</div>
+                <div class="badge-pill">🎲 مادة الرياضيات</div>
+            </div>
+        </div>
+
+        <div class="header-logo-container end">
+            <div class="logo-info" style="text-align: left;">
+                <h3>أسرة الرياضيات</h3>
+                <p>التميز والإبداع العلمي</p>
+            </div>
+            <div class="logo-frame" title="شعار أسرة الرياضيات">
+                <!-- تحميل شعار أسرة الرياضيات math مع بدائل SVG أنيقة -->
+                <img id="mathLogoImg" src="math.png" alt="شعار أسرة الرياضيات" 
+                     onerror="handleImageFallback(this, ['math.jpg', 'math.jpeg', 'math.webp', 'math.svg', 'math'], 'mathFallbackSvg')">
+                <svg id="mathFallbackSvg" style="display:none;" viewBox="0 0 100 100">
+                    <rect width="100" height="100" rx="16" fill="#0f766e"/>
+                    <text x="50" y="44" font-size="28" font-family="'Tajawal', sans-serif" font-weight="900" fill="#fbbf24" text-anchor="middle">∑</text>
+                    <text x="50" y="78" font-size="28" font-family="'Tajawal', sans-serif" font-weight="900" fill="#ffffff" text-anchor="middle">π √</text>
+                </svg>
+            </div>
+        </div>
+    </header>
+
+    <main class="workspace">
+        <!-- مستطيل القرص الدوار -->
+        <section class="wheel-card" id="wheelCard">
+            <div class="wheel-container">
+                <div class="wheel-pointer" id="pointerEl"></div>
+                <canvas id="wheelCanvas" width="530" height="530"></canvas>
+                <div class="center-spin-hub" onclick="triggerSpin()">
+                    <div>تدوير</div>
+                    <span>SPIN</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- لوحة التحكم وإحصائيات الطلاب الـ 36 -->
+        <aside class="side-control-card">
+            <div class="stats-grid">
+                <div class="stat-box">
+                    <div class="count" id="totalCountDisplay" style="color: #0284c7;">36</div>
+                    <div class="label">إجمالي الطلاب</div>
+                </div>
+                <div class="stat-box">
+                    <div class="count" id="remainingCountDisplay" style="color: #10b981;">36</div>
+                    <div class="label">المتبقين بالقرص</div>
+                </div>
+                <div class="stat-box">
+                    <div class="count" id="excludedCountDisplay" style="color: #ef4444;">0</div>
+                    <div class="label">المستبعدين</div>
+                </div>
+            </div>
+
+            <button class="btn-modern btn-spin-main" id="mainSpinBtn" onclick="triggerSpin()">
+                <span>🎯</span> تدوير القرص لاختيار طالب
+            </button>
+
+            <div class="action-btns-row">
+                <button class="btn-modern btn-secondary" id="soundBtn" onclick="toggleMute()">
+                    <span id="soundIcon">🔊</span> الصوت: مفعل
+                </button>
+                <button class="btn-modern btn-danger" onclick="confirmResetAll()">
+                    <span>🔄</span> إعادة ضبط الكل
+                </button>
+            </div>
+
+            <div class="list-tabs">
+                <button class="tab-btn active" id="tabActive" onclick="switchTab('active')">المتبقين في القرص</button>
+                <button class="tab-btn" id="tabExcluded" onclick="switchTab('excluded')">المستبعدين (تم اختيارهم)</button>
+            </div>
+
+            <div class="students-scroll" id="studentsListWrapper">
+                <!-- تعبئة أسماء الطلاب ديناميكياً -->
+            </div>
+        </aside>
+    </main>
+
+    <div class="modal-overlay" id="awardModal">
+        <div class="winner-card">
+            <div class="winner-cup">🏆</div>
+            <div class="winner-header-sub">🎉 نجم المشاركة المتميز معنا الآن 🎉</div>
+            <div class="winner-name-display" id="awardedStudentName">اسم الطالب</div>
+            <div class="winner-note-text">
+                اختر الإجراء المناسب لضمان استمرارية التفاعل وعدالة المشاركة:
+            </div>
+            <div class="winner-modal-actions">
+                <button class="winner-btn btn-confirm-exclude" onclick="confirmWinnerExclusion(true)">
+                    <span>⛔</span> استبعاد الطالب ومتابعة السحب
+                </button>
+                <button class="winner-btn btn-keep" onclick="confirmWinnerExclusion(false)">
+                    <span>✅</span> إبقاء الطالب في القرص
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div class="toast-box" id="toastMessage"></div>
+
+    <!-- عنصر الصوت المرفق: يدعم spin بكافة الامتدادات والبدائل -->
+    <audio id="spinAudioElement" preload="auto">
+        <source src="spin.mp3" type="audio/mpeg">
+        <source src="spin.wav" type="audio/wav">
+        <source src="spin.ogg" type="audio/ogg">
+        <source src="spin" type="audio/mpeg">
+    </audio>
+
+    <script>
+        // قائمة الطلاب الـ 36 المعتمدة للصف 6 / 2
+        const originalStudentRoster = [
+            "أحمد بن أمير بن جمعه سعيد الوهيبي",
+            "آدم بن صابر بن غلام آدم الزدجالي",
+            "أسامة بن أسعد بن خليفه محمد المالكي",
+            "أسامة بن أنس بن شامس سيف الأخزمي",
+            "أمير بن أسعد بن جمعه فاضل البلوشي",
+            "أمير بن عبدالله بن مبارك عبيد الخصيبي",
+            "أيوب بن عبدالله بن أيوب شعبان البلوشي",
+            "الأزهر بن علي بن هلال سالم الهادي",
+            "البراء بن أحمد بن سليمان محمد البوصافي",
+            "البراء بن بدر بن علي سالم الشبلي",
+            "الحارث بن محمد بن جمعان مبارك الرواحي",
+            "الحسام عادل هزاع المجيدي",
+            "الحسن بن عابد بن موسى حسين البلوشي",
+            "باسل بن أسعد بن عبدالله عيسى الهادي",
+            "تميم بن ناصر بن عبدالله سعود الشكيري",
+            "جيفر بن حمد بن مبارك قريش الجهمني",
+            "حسام بن فهد بن محمد أعظم محمد هداية قريشي",
+            "حسين بن محمد بن حسين الياس الرئيسي",
+            "حمد بن سعود بن علي ثاني الوهيبي",
+            "خالد بن منذر بن خالد داؤد الزدجالي",
+            "رائد بن خلفان بن يوسف محمد الجابري",
+            "راكان بن ياسر بن خميس علي الهاشمي",
+            "زكريا بن سامي بن صالح درويش القاسمي",
+            "سعيد بن محمد بن سعيد هديب الغماري",
+            "سعيد بن محمود بن سعيد سالم الشعيبي",
+            "شبيب بن قيس بن اسحاق بيتماه الرئيسي",
+            "شهاب بن سامي بن خليفه سعيد التوبي",
+            "عبدالرحمن بن سالم بن سعيد سالم المحروقي",
+            "عبدالرحمن بن وليد بن حديد رمضان المقيمي",
+            "عبدالعزيز بن موسى بن راشد عبيد الهنائي",
+            "عمار بن ياسر بن أحمد علي المحروقي",
+            "عمر بن يحيى بن سليمان حمد الجابري",
+            "ليث بن عارف بن أحمد علي المحروقي",
+            "محمد بن كهلان بن سيف محمد الشقصي",
+            "يامن بن زكريا بن محمد ناصر البوصافي",
+            "يوسف مروان عماد الدين محمد"
+        ];
+
+        let activePool = [...originalStudentRoster];
+        let excludedPool = [];
+        let currentTab = 'active';
+        let pendingWinnerIndex = -1;
+
+        const canvas = document.getElementById("wheelCanvas");
+        const ctx = canvas.getContext("2d");
+        const spinAudio = document.getElementById("spinAudioElement");
+        let audioMuted = false;
+
+        // فحص تلقائي ذكي لصورة الخلفية background بجميع الامتدادات وتطبيقها على Body, Header, Wheel Card
+        function applyBackgroundImage(url) {
+            document.documentElement.style.setProperty('--bg-active-image', `url('${url}')`);
+        }
+
+        function checkAndLoadBackground() {
+            const candidates = [
+                'background.png',
+                'background.jpg',
+                'background.jpeg',
+                'background.webp',
+                'background'
+            ];
+            
+            let loaded = false;
+
+            function tryNext(index) {
+                if (index >= candidates.length || loaded) return;
+                const testImg = new Image();
+                testImg.onload = function() {
+                    if (!loaded) {
+                        loaded = true;
+                        applyBackgroundImage(candidates[index]);
+                    }
+                };
+                testImg.onerror = function() {
+                    tryNext(index + 1);
+                };
+                testImg.src = candidates[index];
+            }
+
+            tryNext(0);
+        }
+
+        // معالج البدائل الذكي للصور مع SVG احتياطي
+        function handleImageFallback(imgElement, alternatives, fallbackSvgId) {
+            const nextCandidate = alternatives.shift();
+            if (nextCandidate) {
+                imgElement.src = nextCandidate;
+            } else {
+                imgElement.style.display = 'none';
+                const svg = document.getElementById(fallbackSvgId);
+                if (svg) svg.style.display = 'block';
+            }
+        }
+
+        // باليتة ألوان مبهجة وعالية الوضوح
+        const palette = [
+            "#2563eb", "#ea580c", "#059669", "#7c3aed", 
+            "#db2777", "#0284c7", "#d97706", "#4f46e5", 
+            "#16a34a", "#9333ea", "#0891b2", "#e11d48",
+            "#ca8a04", "#0d9488", "#6366f1", "#c026d3"
+        ];
+
+        let wheelRotation = 0;
+        let isSpinningNow = false;
+
+        // محاكي صوت تكتكة دوران القرص بالـ Web Audio API كضمان دائم لعمل الصوت
+        let audioCtx = null;
+        function playSyntheticTick() {
+            if (audioMuted) return;
+            try {
+                if (!audioCtx) {
+                    audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+                }
+                const osc = audioCtx.createOscillator();
+                const gain = audioCtx.createGain();
+                osc.type = "sine";
+                osc.frequency.setValueAtTime(680, audioCtx.currentTime);
+                osc.frequency.exponentialRampToValueAtTime(140, audioCtx.currentTime + 0.04);
+                gain.gain.setValueAtTime(0.25, audioCtx.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.04);
+                osc.connect(gain);
+                gain.connect(audioCtx.destination);
+                osc.start();
+                osc.stop(audioCtx.currentTime + 0.04);
+            } catch(e) {}
+        }
+
+        // نغمة فوز مبهجة إلكترونية
+        function playVictoryTone() {
+            if (audioMuted) return;
+            try {
+                if (!audioCtx) {
+                    audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+                }
+                const notes = [523.25, 659.25, 783.99, 1046.50]; // C5, E5, G5, C6
+                notes.forEach((freq, idx) => {
+                    const osc = audioCtx.createOscillator();
+                    const gain = audioCtx.createGain();
+                    osc.type = "triangle";
+                    osc.frequency.setValueAtTime(freq, audioCtx.currentTime + idx * 0.1);
+                    gain.gain.setValueAtTime(0.3, audioCtx.currentTime + idx * 0.1);
+                    gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + idx * 0.1 + 0.35);
+                    osc.connect(gain);
+                    gain.connect(audioCtx.destination);
+                    osc.start(audioCtx.currentTime + idx * 0.1);
+                    osc.stop(audioCtx.currentTime + idx * 0.1 + 0.35);
+                });
+            } catch(e) {}
+        }
+
+        function renderWheel() {
+            const total = activePool.length;
+            const cx = canvas.width / 2;
+            const cy = canvas.height / 2;
+            const radius = cx - 14;
+
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            if (total === 0) {
+                ctx.save();
+                ctx.beginPath();
+                ctx.arc(cx, cy, radius, 0, Math.PI * 2);
+                ctx.fillStyle = "#f8fafc";
+                ctx.fill();
+                ctx.strokeStyle = "#f59e0b";
+                ctx.lineWidth = 6;
+                ctx.stroke();
+
+                ctx.fillStyle = "#1e3a8a";
+                ctx.font = "bold 22px Tajawal";
+                ctx.textAlign = "center";
+                ctx.textBaseline = "middle";
+                ctx.fillText("تمت مشاركة جميع الطلاب بنجاح! 🌟", cx, cy - 15);
+                ctx.font = "bold 16px Tajawal";
+                ctx.fillStyle = "#64748b";
+                ctx.fillText("اضغط على إعادة ضبط الكل لإعادة السحب", cx, cy + 22);
+                ctx.restore();
+                return;
+            }
+
+            const arcSlice = (Math.PI * 2) / total;
+
+            for (let i = 0; i < total; i++) {
+                const angle = wheelRotation + i * arcSlice;
+
+                ctx.beginPath();
+                ctx.moveTo(cx, cy);
+                ctx.arc(cx, cy, radius, angle, angle + arcSlice);
+                ctx.lineTo(cx, cy);
+                ctx.fillStyle = palette[i % palette.length];
+                ctx.fill();
+
+                // خط أبيض فاصل ومحدد
+                ctx.strokeStyle = "#ffffff";
+                ctx.lineWidth = 2;
+                ctx.stroke();
+
+                // كتابة اسم الطالب بوضوح
+                ctx.save();
+                ctx.translate(cx, cy);
+                ctx.rotate(angle + arcSlice / 2);
+                ctx.textAlign = "right";
+                ctx.fillStyle = "#ffffff";
+
+                let fontSize = 16;
+                if (total > 28) fontSize = 11.5;
+                else if (total > 18) fontSize = 13.5;
+                else if (total > 10) fontSize = 15;
+
+                ctx.font = `bold ${fontSize}px Tajawal`;
+                ctx.shadowColor = "rgba(0, 0, 0, 0.4)";
+                ctx.shadowBlur = 3;
+
+                let name = activePool[i];
+                if (total > 20 && name.length > 27) {
+                    const parts = name.split(" ");
+                    name = parts.slice(0, 3).join(" ") + "..";
+                }
+
+                ctx.fillText(name, radius - 20, 5);
+                ctx.restore();
+            }
+
+            // إطار خارجي ذهبي متلألئ
+            ctx.save();
+            ctx.beginPath();
+            ctx.arc(cx, cy, radius, 0, Math.PI * 2);
+            ctx.strokeStyle = "rgba(251, 191, 36, 0.9)";
+            ctx.lineWidth = 4;
+            ctx.stroke();
+            ctx.restore();
+        }
+
+        function triggerSpin() {
+            if (isSpinningNow) return;
+            if (activePool.length === 0) {
+                showToast("تم اختيار جميع الطلاب بالفعل! اضغط على إعادة ضبط الكل للبدء مجدداً.");
+                return;
+            }
+
+            isSpinningNow = true;
+            document.getElementById("mainSpinBtn").disabled = true;
+
+            // تشغيل صوت القرص المرفق spin
+            if (!audioMuted) {
+                spinAudio.currentTime = 0;
+                const playPromise = spinAudio.play();
+                if (playPromise !== undefined) {
+                    playPromise.catch(() => {});
+                }
+            }
+
+            const extraRotations = 7 + Math.random() * 5; // دورات حماسية
+            const randomOffset = Math.random() * (Math.PI * 2);
+            const targetRotation = wheelRotation + (extraRotations * Math.PI * 2) + randomOffset;
+            const startAngle = wheelRotation;
+            const totalDistance = targetRotation - startAngle;
+            const totalDuration = 6200;
+            let startTime = null;
+            let lastSectorIndex = -1;
+
+            const pointer = document.getElementById("pointerEl");
+
+            function spinStep(timestamp) {
+                if (!startTime) startTime = timestamp;
+                const elapsed = timestamp - startTime;
+                const progress = Math.min(elapsed / totalDuration, 1);
+
+                // منحنى حركة انسيابي مهدأ (Quartic Out)
+                const ease = 1 - Math.pow(1 - progress, 4);
+                wheelRotation = startAngle + (totalDistance * ease);
+
+                const currentSector = getCurrentHoverIndex();
+                if (currentSector !== lastSectorIndex) {
+                    lastSectorIndex = currentSector;
+                    playSyntheticTick();
+                    if (pointer) {
+                        pointer.style.transform = "translateX(-50%) scale(1.18)";
+                        setTimeout(() => {
+                            if (pointer) pointer.style.transform = "translateX(-50%) scale(1)";
+                        }, 50);
+                    }
+                }
+
+                renderWheel();
+
+                if (progress < 1) {
+                    requestAnimationFrame(spinStep);
+                } else {
+                    isSpinningNow = false;
+                    document.getElementById("mainSpinBtn").disabled = false;
+                    wheelRotation = wheelRotation % (Math.PI * 2);
+                    finalizeSelection();
+                }
+            }
+
+            requestAnimationFrame(spinStep);
+        }
+
+        function getCurrentHoverIndex() {
+            if (activePool.length === 0) return -1;
+            const arcSlice = (Math.PI * 2) / activePool.length;
+            const arrowAngle = (3 * Math.PI) / 2; // زاوية المؤشر في الأعلى تماماً
+            let norm = (arrowAngle - wheelRotation) % (Math.PI * 2);
+            if (norm < 0) norm += (Math.PI * 2);
+            return Math.floor(norm / arcSlice) % activePool.length;
+        }
+
+        function finalizeSelection() {
+            pendingWinnerIndex = getCurrentHoverIndex();
+            const chosenStudent = activePool[pendingWinnerIndex];
+
+            playVictoryTone();
+            launchFireworks();
+            displayAwardModal(chosenStudent);
+        }
+
+        function displayAwardModal(studentName) {
+            document.getElementById("awardedStudentName").innerText = studentName;
+            document.getElementById("awardModal").style.display = "flex";
+        }
+
+        function confirmWinnerExclusion(shouldExclude) {
+            document.getElementById("awardModal").style.display = "none";
+            if (pendingWinnerIndex < 0 || pendingWinnerIndex >= activePool.length) return;
+
+            const chosenStudent = activePool[pendingWinnerIndex];
+
+            if (shouldExclude) {
+                // استبعاد الطالب المختار
+                activePool.splice(pendingWinnerIndex, 1);
+                excludedPool.push(chosenStudent);
+                showToast(`تم استبعاد الطالب (${chosenStudent}) من القرص لضمان العدالة.`);
+            } else {
+                showToast(`تم إبقاء الطالب (${chosenStudent}) داخل القرص.`);
+            }
+
+            pendingWinnerIndex = -1;
+            updateCounters();
+            refreshListDisplay();
+            renderWheel();
+        }
+
+        function launchFireworks() {
+            if (typeof confetti === 'function') {
+                confetti({
+                    particleCount: 120,
+                    spread: 85,
+                    origin: { y: 0.6 }
+                });
+                setTimeout(() => {
+                    confetti({
+                        particleCount: 75,
+                        angle: 60,
+                        spread: 60,
+                        origin: { x: 0 }
+                    });
+                    confetti({
+                        particleCount: 75,
+                        angle: 120,
+                        spread: 60,
+                        origin: { x: 1 }
+                    });
+                }, 200);
+            }
+        }
+
+        function updateCounters() {
+            document.getElementById("totalCountDisplay").innerText = originalStudentRoster.length;
+            document.getElementById("remainingCountDisplay").innerText = activePool.length;
+            document.getElementById("excludedCountDisplay").innerText = excludedPool.length;
+        }
+
+        function switchTab(tab) {
+            currentTab = tab;
+            document.getElementById("tabActive").classList.toggle("active", tab === 'active');
+            document.getElementById("tabExcluded").classList.toggle("active", tab === 'excluded');
+            refreshListDisplay();
+        }
+
+        function refreshListDisplay() {
+            const container = document.getElementById("studentsListWrapper");
+            container.innerHTML = "";
+
+            if (currentTab === 'active') {
+                if (activePool.length === 0) {
+                    container.innerHTML = `<div style="text-align:center; padding:24px; color:#64748b; font-weight:700;">لا يوجد طلاب متبقين في القرص 🌟</div>`;
+                    return;
+                }
+                activePool.forEach((student, i) => {
+                    const row = document.createElement("div");
+                    row.className = "student-row";
+                    row.innerHTML = `
+                        <div style="display:flex; align-items:center;">
+                            <span class="num-idx">${i + 1}</span>
+                            <span>${student}</span>
+                        </div>
+                        <button class="restore-mini-btn" style="border-color:#fca5a5; color:#dc2626; background:#fef2f2;" onclick="manualExclude(${i})">استبعاد</button>
+                    `;
+                    container.appendChild(row);
+                });
+            } else {
+                if (excludedPool.length === 0) {
+                    container.innerHTML = `<div style="text-align:center; padding:24px; color:#64748b; font-weight:700;">لم يتم استبعاد أي طالب بعد</div>`;
+                    return;
+                }
+                excludedPool.forEach((student, i) => {
+                    const row = document.createElement("div");
+                    row.className = "student-row excluded";
+                    row.innerHTML = `
+                        <div style="display:flex; align-items:center;">
+                            <span class="num-idx">✓</span>
+                            <span>${student}</span>
+                        </div>
+                        <button class="restore-mini-btn" onclick="restoreStudent(${i})">إرجاع للقرص</button>
+                    `;
+                    container.appendChild(row);
+                });
+            }
+        }
+
+        function manualExclude(index) {
+            if (isSpinningNow) return;
+            const removed = activePool.splice(index, 1)[0];
+            excludedPool.push(removed);
+            updateCounters();
+            refreshListDisplay();
+            renderWheel();
+        }
+
+        function restoreStudent(index) {
+            if (isSpinningNow) return;
+            const restored = excludedPool.splice(index, 1)[0];
+            activePool.push(restored);
+            updateCounters();
+            refreshListDisplay();
+            renderWheel();
+        }
+
+        function confirmResetAll() {
+            if (isSpinningNow) return;
+            activePool = [...originalStudentRoster];
+            excludedPool = [];
+            wheelRotation = 0;
+            updateCounters();
+            refreshListDisplay();
+            renderWheel();
+            showToast("تمت إعادة جميع الطلاب الـ 36 إلى القرص بنجاح!");
+        }
+
+        function toggleMute() {
+            audioMuted = !audioMuted;
+            const btn = document.getElementById("soundBtn");
+            if (audioMuted) {
+                btn.innerHTML = `<span id="soundIcon">🔇</span> الصوت: مكتوم`;
+                spinAudio.muted = true;
+            } else {
+                btn.innerHTML = `<span id="soundIcon">🔊</span> الصوت: مفعل`;
+                spinAudio.muted = false;
+            }
+        }
+
+        function showToast(msg) {
+            const toast = document.getElementById("toastMessage");
+            toast.innerText = msg;
+            toast.style.display = "block";
+            setTimeout(() => {
+                toast.style.display = "none";
+            }, 3000);
+        }
+
+        window.onload = function() {
+            checkAndLoadBackground();
+            updateCounters();
+            refreshListDisplay();
+            renderWheel();
+        };
+    </script>
+</body>
+</html>
